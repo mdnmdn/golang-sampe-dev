@@ -1,0 +1,19 @@
+version: '3.3'
+services:
+  webapp:
+    image: mdnmdn/golang-compile-daemon:1.13-alpine
+    environment:
+      PORT: "8001"
+    ports:
+      - 8001:8001
+      - 2345:2345
+    #depends_on:
+    #  - mongo
+    volumes:
+      - .:/app
+      - sample-golang-cache:/go/pkg/mod
+    command: CompileDaemon -color=true -build "echo restarting" -command "sh ./scripts/run-dlv.sh"
+
+
+volumes:
+  sample-golang-cache:
